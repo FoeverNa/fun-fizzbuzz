@@ -5,24 +5,32 @@ public class FibonaChicken {
         Scanner scanner = new Scanner(System.in);
 
         Integer personCount = scanner.nextInt();
-        int[] chickenCount = new int[personCount];
-        for (int i = 0; i < personCount; i++) {
-            chickenCount[i] = 0;
-        }
+        int checkCount = personCount;
+        long [] chickenCount = new long[51];
+        long result = 0;
 
-        chickenCount[0] = 1;
+        chickenCount[0] = 0;
         chickenCount[1] = 1;
-
-        if (personCount == 1) {
-            System.out.println("1인 1닭");
-        } else if (personCount == 2) {
-            System.out.println("2인 " + chickenCount[1] + "닭");
-        } else {
-            for (int i = 2; i < personCount; i++) {
-                chickenCount[i] = chickenCount[i-1] + chickenCount[i-2];
-            }
-            System.out.println(personCount+"인 " + chickenCount[personCount-1] + "닭");
+        for (int i = 2; i < 51; i++) {
+            chickenCount[i] = chickenCount[i-1] + chickenCount[i-2];
         }
+
+        while (checkCount > 0) {
+            for (int i = chickenCount.length - 1; i >= 2; i--) {
+                if (personCount == chickenCount[i]) {
+                    result = chickenCount[i-1];
+                    System.out.println(result);
+                    System.exit(0);
+                }
+
+                if (checkCount >= chickenCount[i]) {
+                    result += chickenCount[i-1];
+                    checkCount -= chickenCount[i];
+                }
+            }
+        }
+
+        System.out.println(result);
     }
 }
 
